@@ -1,10 +1,15 @@
 import asyncio
 from datetime import datetime
 from time import sleep
+import random
+
+
+ITERATION_PERIOD = 2
 
 
 def run_tasks_that_take_some_time():
-    pass
+    time_to_waste = random.uniform(0, ITERATION_PERIOD/2)
+    sleep(time_to_waste)
 
 
 def fill_iteration_period(start_time: datetime, iteration_period: int):
@@ -23,7 +28,6 @@ def fill_iteration_period(start_time: datetime, iteration_period: int):
 
 async def main():
     max_iter = 5
-    iteration_period = 2
 
     for i in range(1, max_iter+1):
         iteration_start = datetime.now()
@@ -31,7 +35,7 @@ async def main():
 
         run_tasks_that_take_some_time()
 
-        fill_iteration_period(iteration_start, iteration_period)
+        fill_iteration_period(iteration_start, ITERATION_PERIOD)
 
         iteration_end = datetime.now()
         print(f"Iteração {i} terminada em {iteration_end.strftime('%H:%M:%S.%f')}")
