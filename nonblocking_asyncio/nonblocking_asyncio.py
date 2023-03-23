@@ -7,6 +7,10 @@ import random
 ITERATION_PERIOD = 2
 
 
+def to_string(dt: datetime) -> str:
+    return dt.strftime('%H:%M:%S.%f')
+
+
 def fill_iteration_period(start_time: datetime, iteration_period: int):
     now = datetime.now()
     delta_t = (now - start_time).total_seconds()
@@ -27,6 +31,9 @@ def run_sync_funcs_that_take_some_time():
 
 
 async def func_that_may_take_time(task_id) -> None:
+    task_start = datetime.now()
+    print(f"* Task {task_id} iniciada em {to_string(task_start)}")
+
     if task_id == 3:
         func_running_time = round(random.uniform(0, 2*ITERATION_PERIOD), 4)
     else:
@@ -49,11 +56,11 @@ async def run_async_funcs_that_may_take_time():
 
 
 async def main():
-    max_iter = 10
+    max_iter = 3
 
     for i in range(1, max_iter+1):
         iteration_start = datetime.now()
-        print(f"Iteração {i} iniciada {iteration_start.strftime('%H:%M:%S.%f')}")
+        print(f"Iteração {i} iniciada {to_string(iteration_start)}")
 
         run_sync_funcs_that_take_some_time()
 
@@ -62,7 +69,7 @@ async def main():
         fill_iteration_period(iteration_start, ITERATION_PERIOD)
 
         iteration_end = datetime.now()
-        print(f"Iteração {i} terminada em {iteration_end.strftime('%H:%M:%S.%f')}")
+        print(f"Iteração {i} terminada em {to_string(iteration_end)}")
         print(f"{(iteration_end - iteration_start).total_seconds() = }\n")
 
 
