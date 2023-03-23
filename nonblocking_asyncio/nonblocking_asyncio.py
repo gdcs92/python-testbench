@@ -41,7 +41,8 @@ async def func_that_may_take_time(task_id) -> None:
 
     # sleep(func_running_time)
     await asyncio.sleep(func_running_time)
-    print(f"* Task {task_id} executada em {func_running_time:.4f} segundos.")
+    task_end = datetime.now()
+    print(f"* Task {task_id} finalizada em {to_string(task_end)} ({func_running_time:.4f} segundos).")
     return
 
 
@@ -51,7 +52,11 @@ async def run_async_funcs_that_may_take_time():
         asyncio.create_task(func_that_may_take_time(i))
         for i in range(num_tasks)
     ]
-    # return await asyncio.gather(*tasks)
+    done, pending = await asyncio.wait(tasks, timeout=0.1)
+    print("\nTarefas pendentes:", len(pending))
+    for task in pending:
+        print(task, type(task))
+    print()
     return
 
 
