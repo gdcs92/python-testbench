@@ -44,11 +44,12 @@ async def run_async_funcs_that_may_take_time():
         asyncio.create_task(func_that_may_take_time(i))
         for i in range(num_tasks)
     ]
-    return await asyncio.gather(*tasks)
+    # return await asyncio.gather(*tasks)
+    return
 
 
 async def main():
-    max_iter = 3
+    max_iter = 10
 
     for i in range(1, max_iter+1):
         iteration_start = datetime.now()
