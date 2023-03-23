@@ -11,13 +11,13 @@ def fill_iteration_period(start_time: datetime, iteration_period: int):
     now = datetime.now()
     delta_t = (now - start_time).total_seconds()
 
-    if delta_t >= iteration_period:
+    remaining_time = iteration_period - delta_t
+
+    if remaining_time < 0:
+        print(f"(!) Período da iteração ultrapassado em {-remaining_time} segundos.")
         return
 
-    remaining_time = iteration_period - delta_t
-    print(
-        f"Dormindo por {remaining_time} segundos para completar o período da iteração"
-    )
+    print(f"Dormindo por {remaining_time} segundos para completar o período da iteração")
     sleep(remaining_time)
 
 
@@ -27,7 +27,11 @@ def run_sync_funcs_that_take_some_time():
 
 
 async def func_that_may_take_time(task_id) -> None:
-    func_running_time = round(random.uniform(0, 0.1), 4)
+    if task_id == 3:
+        func_running_time = round(random.uniform(0, 2*ITERATION_PERIOD), 4)
+    else:
+        func_running_time = round(random.uniform(0, 0.1), 4)
+
     # sleep(func_running_time)
     await asyncio.sleep(func_running_time)
     print(f"* Task {task_id} executada em {func_running_time:.4f} segundos.")
