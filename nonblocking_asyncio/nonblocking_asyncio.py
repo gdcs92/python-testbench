@@ -34,12 +34,13 @@ async def func_that_may_take_time(task_id) -> None:
     task_start = datetime.now()
     print(f"* Task {task_id} iniciada em {to_string(task_start)}")
 
-    if task_id == 3:
-        func_running_time = round(random.uniform(0, 2*ITERATION_PERIOD), 4)
+    is_delayed = bool(random.randint(0, 1))
+
+    if is_delayed:
+        func_running_time = round(random.uniform(0.1, 2*ITERATION_PERIOD), 4)
     else:
         func_running_time = round(random.uniform(0, 0.1), 4)
 
-    # sleep(func_running_time)
     await asyncio.sleep(func_running_time)
     task_end = datetime.now()
     print(f"* Task {task_id} finalizada em {to_string(task_end)} ({func_running_time:.4f} segundos).")
@@ -49,14 +50,11 @@ async def func_that_may_take_time(task_id) -> None:
 async def run_async_funcs_that_may_take_time():
     num_tasks = 5
     tasks = [
-        asyncio.create_task(func_that_may_take_time(i))
+        asyncio.create_task(func_that_may_take_time(i), name=f"T{i}")
         for i in range(num_tasks)
     ]
     done, pending = await asyncio.wait(tasks, timeout=0.1)
-    print("\nTarefas pendentes:", len(pending))
-    for task in pending:
-        print(task, type(task))
-    print()
+    print("Tarefas pendentes:", [t.get_name() for t in pending])
     return
 
 
