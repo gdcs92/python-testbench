@@ -18,3 +18,12 @@ saída), enquanto a segunda cancela e levanta TimeoutError.
 Poderia também resolver de outras maneiras; por exemplo através de *threads*.
 Entretanto, prefiro a solução com asyncio por ser de fácil implementação e
 manter a forma de paralelismo que já estava utilizando.
+
+## Referências
+
+* [Coroutines and Tasks - Python documentation]
+(https://docs.python.org/3/library/asyncio-task.html)
+* [Real Python - Speed Up Your Python Program With Concurrency]
+(https://realpython.com/python-concurrency/)
+* [Real Python - Async IO in Python: A Complete Walkthrough]
+(https://realpython.com/async-io-python/)
