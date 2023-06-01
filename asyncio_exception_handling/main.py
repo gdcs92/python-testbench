@@ -7,6 +7,10 @@ async def do_something(idx: int) -> float:
     await asyncio.sleep(idx)
     t2 = time.time()
     deltat = t2 - t1
+
+    if idx == 3:
+        raise RuntimeError(f"Houve um problema na execução da tarefa {idx}")
+
     print(f"{idx = } acordou após {deltat:.3f} segundos.")
     return deltat
 
