@@ -18,8 +18,8 @@ async def main():
     tasks = [
         asyncio.create_task(do_something(idx)) for idx in range(1, 5)
     ]
-    deltas = await asyncio.gather(*tasks)
+    deltas = await asyncio.gather(*tasks, return_exceptions=True)
 
-    print(f"\n{deltas = }")
+    print(f"\n{deltas = }\n")
 
 asyncio.run(main())
