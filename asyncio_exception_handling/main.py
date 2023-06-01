@@ -26,4 +26,9 @@ async def main():
 
     print(f"\n{deltas = }\n")
 
+    if any(isinstance(x, Exception) for x in deltas):
+        print("Ocorreram exceções nas tarefas.")
+    else:
+        print("Todas as tarefas foram executadas com sucesso.")
+
 asyncio.run(main())
