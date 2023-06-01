@@ -17,12 +17,13 @@ async def do_something(idx: int, raise_exceptions: bool) -> float:
 async def main():
 
     raise_exceptions = True
+    return_exceptions = True
 
     tasks = [
         asyncio.create_task(do_something(idx, raise_exceptions))
         for idx in range(1, 5)
     ]
-    deltas = await asyncio.gather(*tasks, return_exceptions=True)
+    deltas = await asyncio.gather(*tasks, return_exceptions=return_exceptions)
 
     print(f"\n{deltas = }\n")
 
